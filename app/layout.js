@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Tailwind ColorScheme Switcher",
-  description: "A simple Tailwind CSS color scheme switcher",
+  description: "A simple Tailwind CSS color scheme switch",
 };
 
 export default function RootLayout({ children }) {
