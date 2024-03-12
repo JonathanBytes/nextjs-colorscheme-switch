@@ -1,5 +1,5 @@
 {
-  "name": "tailwind-color-switcher",
+  "name": "tailwind-colorscheme-switcher",
   "version": "0.1.0",
   "private": true,
   "scripts": {
