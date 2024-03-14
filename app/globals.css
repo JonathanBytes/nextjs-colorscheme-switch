@@ -1,27 +1,99 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --color-foreground: #333;
+    --color-background: #eee;
+    --color-primary: darkblue;
+    --color-secondary: lightblue;
+    --color-accent: purple;
   }
-}
+  .gruvbox {
+    --color-foreground: #3c3836;
+    --color-background: #fdfbf2;
+    --color-primary: #548d8e;
+    --color-secondary: #b0cdcb;
+    --color-accent: #b16286;
+  }
+  .catppuccin {
+    --color-foreground: #4b4e68;
+    --color-background: #eff1f5;
+    --color-primary: #dc8a78;
+    --color-secondary: #f9e2af;
+    --color-accent: #cba6f7;
+  }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-foreground: #ccc;
+      --color-background: #222;
+      --color-primary: darkblue;
+      --color-secondary: lightblue;
+      --color-accent: purple;
+    }
+    .gruvbox {
+      --color-foreground: #d7c9a4;
+      --color-background: #202020;
+      --color-primary: #bee0d9;
+      --color-secondary: #9db9b7;
+      --color-accent: #ee9bb2;
+    }
+    .catppuccin {
+      --color-foreground: #cad3f5;
+      --color-background: #24273a;
+      --color-primary: #8aadf4;
+      --color-secondary: #b7bdf8;
+      --color-accent: #c6a0f6;
+    }
+  }
+
+  html {
+    /* Correct colors to unstyled elements */
+    color-scheme: dark light;
+  }
+
+  body {
+    color: var(--color-foreground);
+    background: var(--color-background);
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+    .gruvbox {
+      --color-foreground: #d7c9a4;
+      --color-background: #202020;
+      --color-primary: #bee0d9;
+      --color-secondary: #9db9b7;
+      --color-accent: #ee9bb2;
+    }
+    .catppuccin {
+      --color-foreground: #cad3f5;
+      --color-background: #24273a;
+      --color-primary: #8aadf4;
+      --color-secondary: #b7bdf8;
+      --color-accent: #c6a0f6;
+    }
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+    .gruvbox {
+      --color-foreground: #3c3836;
+      --color-background: #fdfbf2;
+      --color-primary: #548d8e;
+      --color-secondary: #b0cdcb;
+      --color-accent: #b16286;
+    }
+    .catppuccin {
+      --color-foreground: #4b4e68;
+      --color-background: #eff1f5;
+      --color-primary: #dc8a78;
+      --color-secondary: #f9e2af;
+      --color-accent: #cba6f7;
+    }
+  }
+
+  svg {
+    display: inline-block;
+  }
 }
