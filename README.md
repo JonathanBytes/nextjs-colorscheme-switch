@@ -2,9 +2,5 @@
 
 ## TODO
 
-- [ ] Change blocking script
-    - [ ] Check if there is localStorage
-- [ ] Create libs to handle localStorage for theme and ColorScheme
-    - [ ] Set localStorage
-    - [ ] Get localStorage
-    - [ ] Delete localStorage
+- [ ] Add more html element for showcase the theme switching.
+- [ ] Refactor the code so its easier to read and understand. (Specially the layout file)
