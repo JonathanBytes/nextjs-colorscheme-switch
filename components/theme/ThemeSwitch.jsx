@@ -6,25 +6,24 @@ import Computer from "@/components/icons/Computer";
 import ThemeSwitchButton from "@/components/theme/ThemeSwitchButton";
 import SelectThemeBox from "./SelectThemeBox";
 import { useEffect, useState } from "react";
+import { setCookieTheme, setCookieColorScheme } from "@/lib/userColorsCookies";
 
-const ThemeSwitch = ({ className }) => {
-  const [theme, setTheme] = useState("system");
-  const [colorScheme, setColorScheme] = useState("unset");
+const ThemeSwitch = ({ className, initialUserColors }) => {
+  const [theme, setTheme] = useState(initialUserColors.theme);
+  const [colorScheme, setColorScheme] = useState(initialUserColors.colorScheme);
 
   const handleClick = (name) => {
     setTheme(name);
+    setCookieTheme(name); // Save the theme to cookies
   };
 
   const handleColorSchemeChange = (e) => {
     const newColorScheme = e.target.value;
     setColorScheme(newColorScheme);
-    if (colorScheme !== "unset") {
-      document.body.classList.remove(colorScheme);
-    }
+    setCookieColorScheme(newColorScheme); // Save the color scheme to cookies
   };
 
   useEffect(() => {
-    if (colorScheme === "unset") return;
     document.body.classList.add(colorScheme);
   }, [colorScheme]);
 

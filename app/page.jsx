@@ -1,5 +1,3 @@
-import ThemeSwitch from "@/components/theme/ThemeSwitch";
-
 export default function Home() {
   return (
     <main className="max-w-3xl p-12">
@@ -19,7 +17,6 @@ export default function Home() {
         Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa
         et culpa duis.
       </p>
-      <ThemeSwitch />
     </main>
   );
 }

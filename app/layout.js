@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { getCookieColorScheme, getCookieTheme } from "@/lib/userColorsCookies";
+import ThemeSwitch from "@/components/theme/ThemeSwitch";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -8,45 +10,49 @@ export const metadata = {
   description: "A simple Tailwind CSS color scheme switch",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const initialTheme = await getCookieTheme();
+  const initialColorScheme = await getCookieColorScheme();
+  const initialUserColors = {
+    theme: initialTheme,
+    colorScheme: initialColorScheme,
+  };
   return (
-    <html lang="en">
+    <html lang="en" data-theme={initialUserColors.theme}>
       <body
-        className={`${inter.className} flex flex-col items-center transition-colors duration-300`}
+        className={`${initialUserColors.colorScheme} ${inter.className} flex flex-col items-center transition-colors duration-300`}
       >
         <script
           dangerouslySetInnerHTML={{
-            __html: blockingSetInitialColorMode,
+            __html: blockingSetInitialColorMode(initialUserColors.theme),
           }}
         ></script>
         {children}
+        <ThemeSwitch initialUserColors={initialUserColors} />
       </body>
     </html>
   );
 }
 
-function setInitialColorScheme() {
-  function getInitialColorScheme() {
-    const persistedColorScheme = window.localStorage.getItem("color-scheme");
-    const hasPersistedColorScheme = typeof persistedColorScheme === "string";
+function setInitialColorScheme(initialUserColors) {
+  function getInitialTheme() {
+    const persistedTheme = initialUserColors;
+    const hasPersistedTheme = typeof persistedTheme === "string";
     /**
      * If the user has explicitly chosen light or dark, use it
      */
-    if (hasPersistedColorScheme) {
-      const root = window.document.documentElement;
-      root.style.setProperty("--initial-color-scheme", persistedColorScheme);
-
-      if (persistedColorScheme !== "system") {
-        return persistedColorScheme;
+    if (hasPersistedTheme) {
+      if (persistedTheme !== "system") {
+        return persistedTheme;
       }
     }
     /**
      * If they haven't been explicit, check the media query
      */
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
-    const hasSystemColorSchemePreference = typeof mql.matches === "boolean";
+    const hasSystemThemePreference = typeof mql.matches === "boolean";
 
-    if (hasSystemColorSchemePreference) {
+    if (hasSystemThemePreference) {
       return mql.matches ? "dark" : "light";
     }
 
@@ -57,14 +63,16 @@ function setInitialColorScheme() {
     return "light";
   }
 
-  const colorScheme = getInitialColorScheme();
-  if (colorScheme === "dark") {
+  const theme = getInitialTheme();
+  if (theme === "dark") {
     document.documentElement.classList.add("dark");
   }
 }
 
-const blockingSetInitialColorMode = `(function() {
+function blockingSetInitialColorMode(initialUserColors) {
+  return `(function() {
 		${setInitialColorScheme.toString()}
-		setInitialColorScheme();
+		setInitialColorScheme(${JSON.stringify(initialUserColors)});
 })()
 `;
+}
